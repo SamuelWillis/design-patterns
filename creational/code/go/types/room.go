@@ -4,14 +4,19 @@ import (
 	"strings"
 )
 
-type roomSides struct {
-	north iMapSite
-	east iMapSite
-	south iMapSite
-	west iMapSite
+type IRoom interface {
+	GetSide(direction string) IMapSite
+	SetSide(direction string, mapSite IMapSite)
+	IMapSite
 }
 
-// Room representation.
+type roomSides struct {
+	north IMapSite
+	east IMapSite
+	south IMapSite
+	west IMapSite
+}
+
 type Room struct {
 	RoomNo int
 	sides roomSides
@@ -19,7 +24,7 @@ type Room struct {
 }
 
 // GetSide to access what is on a side of the room.
-func (room Room) GetSide(direction string) iMapSite {
+func (room Room) GetSide(direction string) IMapSite {
 	lower := strings.ToLower(direction)
 	switch lower {
 	case "north":
@@ -36,7 +41,7 @@ func (room Room) GetSide(direction string) iMapSite {
 }
 
 // SetSide to set what is on a side of the room.
-func (room *Room) SetSide(direction string, mapSite iMapSite) {
+func (room *Room) SetSide(direction string, mapSite IMapSite) {
 	lower := strings.ToLower(direction)
 	switch lower {
 	case "north":

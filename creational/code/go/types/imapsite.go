@@ -1,5 +1,5 @@
 package types
 
-type iMapSite interface {
+type IMapSite interface {
 	Enter()
 }

@@ -4,37 +4,60 @@ import (
 	"github.com/SamuelWillis/design-patterns/creational/types"
 )
 
-type iMazeFactory interface {
-	MakeMaze() types.Maze
-	MakeWall() types.Wall
-	MakeRoom(roomNo int) types.Room
-	MakeDoor(room1 types.Room, room2 types.Room) types.Door
+type IMazeFactory interface {
+	MakeMaze() types.IMaze
+	MakeWall() types.IWall
+	MakeRoom(roomNo int) types.IRoom
+	MakeDoor(room1 *types.IRoom, room2 *types.IRoom) types.IDoor
 }
 
-// MazeFactory for simple maze generation
-type MazeFactory struct {}
+type DefaultMazeFactory struct {}
 
 // MakeMaze for easy maze making.
-func (factory MazeFactory) MakeMaze() types.Maze {
-	return types.Maze{}
+func (factory DefaultMazeFactory) MakeMaze() types.IMaze {
+	return &types.Maze{}
 }
 
 // MakeWall for easy wall making
-func (factory MazeFactory) MakeWall() types.Wall {
+func (factory DefaultMazeFactory) MakeWall() types.IWall {
 	return types.Wall{}
 }
 
-// Make room for easy room making.
-func (factory MazeFactory) MakeRoom(roomNo int) types.Room {
-	return types.Room{
+// MakeRoom for easy room making.
+func (factory DefaultMazeFactory) MakeRoom(roomNo int) types.IRoom {
+	return &types.Room{
 		RoomNo: roomNo,
 	}
 }
 
 // MakeDoor for easy door making.
-func (factory MazeFactory) MakeDoor(room1 *types.Room, room2 *types.Room) types.Door {
-	return types.Door{
+func (factory DefaultMazeFactory) MakeDoor(room1 types.IRoom, room2 types.IRoom) types.IDoor {
+	return &types.Door{
 		Room1: room1,
 		Room2: room2,
 	}
+}
+
+func (factory DefaultMazeFactory) CreateMaze() types.IMaze {
+	maze := factory.MakeMaze()
+
+	room1 := factory.MakeRoom(1)
+	room2 := factory.MakeRoom(2)
+
+	door := factory.MakeDoor(room1, room2)
+
+	maze.AddRoom(room1)
+	maze.AddRoom(room2)
+
+	room1.SetSide("North", factory.MakeWall())
+	room1.SetSide("East", door)
+	room1.SetSide("South", factory.MakeWall())
+	room1.SetSide("West", factory.MakeWall())
+
+	room2.SetSide("North", factory.MakeWall())
+	room2.SetSide("East", factory.MakeWall())
+	room2.SetSide("South", factory.MakeWall())
+	room2.SetSide("West", door)
+
+	return maze
 }

@@ -10,28 +10,14 @@ import (
 func main() {
 	fmt.Println("Starting Creational Patterns Go Code")
 
-	factory := abstractfactory.MazeFactory{}
+	maze := abstractfactory.DefaultMazeFactory{}.CreateMaze()
 
-	maze := factory.MakeMaze()
+	fmt.Printf("Your Maze looks like this: %#v\n", maze);
 
-	room1 := factory.MakeRoom(1)
-	room2 := factory.MakeRoom(2)
-
-	door := factory.MakeDoor(&room1, &room2)
-
-	maze.AddRoom(&room1)
-	maze.AddRoom(&room2)
-
-	room1.SetSide("North", factory.MakeWall())
-	room1.SetSide("East", door)
-	room1.SetSide("South", factory.MakeWall())
-	room1.SetSide("West", factory.MakeWall())
-
-	room2.SetSide("North", factory.MakeWall())
-	room2.SetSide("East", factory.MakeWall())
-	room2.SetSide("South", factory.MakeWall())
-	room2.SetSide("West", door)
-
-
-	fmt.Printf("Your Maze looks like this: %#v", maze);
+	fmt.Printf("ROoms\n", maze.GetRooms()[0].GetSide("East"))
 }
+
+type mazeGame struct {
+	factory abstractfactory.IMazeFactory
+}
+

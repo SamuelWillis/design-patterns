@@ -1,9 +1,13 @@
 package types
 
+type IDoor interface {
+	IMapSite
+}
+
 // Door bridges the void between two rooms.
 type Door struct {
-	Room1 *Room
-	Room2 *Room
+	Room1 IRoom
+	Room2 IRoom
 	isOpen bool
 	mapSite
 }
