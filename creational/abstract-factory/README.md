@@ -21,6 +21,10 @@ Use this pattern when:
 
 <!! TODO DIAGRAM !!>
 
+## Implementations
+
+[Golang](/creational/code/go/)
+
 ## Participants
 
 ### AbstractFactory
