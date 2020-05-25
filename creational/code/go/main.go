@@ -14,7 +14,9 @@ func main() {
 
 	fmt.Printf("Your Maze looks like this: %#v\n", maze);
 
-	fmt.Printf("ROoms\n", maze.GetRooms()[0].GetSide("East"))
+	enchantedMaze := abstractfactory.EnchantedMazeFactory{}.CreateMaze()
+
+	fmt.Printf("Your EnchantedMaze looks like this: %#v\n", enchantedMaze);
 }
 
 type mazeGame struct {
