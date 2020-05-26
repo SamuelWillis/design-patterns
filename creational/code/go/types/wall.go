@@ -1,5 +1,6 @@
 package types
 
+// IWall interface.
 type IWall interface {
 	IMapSite
 }

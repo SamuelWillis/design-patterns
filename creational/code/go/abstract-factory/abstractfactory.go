@@ -1,16 +1,20 @@
 package abstractfactory
 
 import (
+	"math/rand"
+	"time"
 	"github.com/SamuelWillis/design-patterns/creational/types"
 )
 
+// IMazeFactory interface.
 type IMazeFactory interface {
 	MakeMaze() types.IMaze
 	MakeWall() types.IWall
 	MakeRoom(roomNo int) types.IRoom
-	MakeDoor(room1 *types.IRoom, room2 *types.IRoom) types.IDoor
+	MakeDoor(room1 types.IRoom, room2 types.IRoom) types.IDoor
 }
 
+// DefaultMazeFactory to create default mazes.
 type DefaultMazeFactory struct {}
 
 // MakeMaze for easy maze making.
@@ -32,12 +36,13 @@ func (factory DefaultMazeFactory) MakeRoom(roomNo int) types.IRoom {
 
 // MakeDoor for easy door making.
 func (factory DefaultMazeFactory) MakeDoor(room1 types.IRoom, room2 types.IRoom) types.IDoor {
-	return &types.Door{
+	return types.Door{
 		Room1: room1,
 		Room2: room2,
 	}
 }
 
+// CreateMaze function.
 func (factory DefaultMazeFactory) CreateMaze() types.IMaze {
 	maze := factory.MakeMaze()
 
@@ -62,6 +67,7 @@ func (factory DefaultMazeFactory) CreateMaze() types.IMaze {
 	return maze
 }
 
+// EnchantedMazeFactory to create mazes with enchated rooms.
 type EnchantedMazeFactory struct {}
 
 // MakeMaze for easy maze making.
@@ -76,7 +82,14 @@ func (factory EnchantedMazeFactory) MakeWall() types.IWall {
 
 // MakeRoom for easy room making.
 func (factory EnchantedMazeFactory) MakeRoom(roomNo int) types.IRoom {
-	return &types.EnchantedRoom{
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	if (rand.Intn(2) == 1) {
+		return &types.EnchantedRoom{
+			RoomNo: roomNo,
+		}
+	}
+	return &types.Room{
 		RoomNo: roomNo,
 	}
 }
@@ -89,6 +102,7 @@ func (factory EnchantedMazeFactory) MakeDoor(room1 types.IRoom, room2 types.IRoo
 	}
 }
 
+// CreateMaze implementation for EnchantedMazeFactory.
 func (factory EnchantedMazeFactory) CreateMaze() types.IMaze {
 	maze := factory.MakeMaze()
 

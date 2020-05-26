@@ -1,5 +1,6 @@
 package types
 
+// IMaze interface.
 type IMaze interface {
 	AddRoom(room IRoom)
 	GetRooms() []IRoom

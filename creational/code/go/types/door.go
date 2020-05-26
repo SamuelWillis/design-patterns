@@ -1,6 +1,8 @@
 package types
 
+// IDoor Interface.
 type IDoor interface {
+	Open() bool
 	IMapSite
 }
 
@@ -8,11 +10,11 @@ type IDoor interface {
 type Door struct {
 	Room1 IRoom
 	Room2 IRoom
-	isOpen bool
+	open bool
 	mapSite
 }
 
-// IsOpen to tell if the void is accessible.
-func (door Door) IsOpen() bool {
-	return door.isOpen
+// Open to tell if the void is accessible.
+func (door Door) Open() bool {
+	return door.open
 }

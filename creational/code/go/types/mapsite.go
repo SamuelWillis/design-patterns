@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+// IMapSite interface.
+type IMapSite interface {
+	Enter()
+}
+
 type mapSite struct {}
 
 func (mapSite mapSite) Enter() {

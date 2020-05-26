@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// IRoom interface.
 type IRoom interface {
 	GetSide(direction string) IMapSite
 	SetSide(direction string, mapSite IMapSite)
@@ -17,6 +18,7 @@ type roomSides struct {
 	west IMapSite
 }
 
+// Room struct.
 type Room struct {
 	RoomNo int
 	sides roomSides
@@ -60,13 +62,7 @@ func (room *Room) SetSide(direction string, mapSite IMapSite) {
 type EnchantedRoom struct {
 	RoomNo int
 	sides roomSides
-	isEnchanted bool
 	mapSite
-}
-
-// GetSide to access what is on a side of the room.
-func (room EnchantedRoom) IsEnchanted() bool {
-	return true
 }
 
 // GetSide to access what is on a side of the room.
